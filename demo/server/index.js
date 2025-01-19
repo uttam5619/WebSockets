@@ -25,9 +25,20 @@ app.use(
         credentials:true,
     })
 )
+
+
 // listening WebSocket server on port 5646
 io.on('connection',(socket)=>{
     console.log(`A new client node conntected to socket server with socket id ${socket.id}`)
+    socket.emit('connection',`hello client node! i am server , our socket id is ${socket.id}`)
+    //socket.broadcast.emit('connection',`hello to all, i am a new client node with socket id ${socket.id}`)
+    socket.on('message',(message)=>{
+        console.log(message)
+        socket.broadcast.emit('info', message)
+    })
+
+    
+    
 })
 
 
